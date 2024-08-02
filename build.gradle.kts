@@ -1,7 +1,7 @@
 import net.fabricmc.loom.configuration.ide.RunConfigSettings
 
 plugins {
-    id("fabric-loom") version "1.7-SNAPSHOT"
+    id("fabric-loom") version "1.7.4"
     id("legacy-looming")version "1.7-SNAPSHOT" // Version must be the same as fabric-loom's
     kotlin("jvm") version "2.0.0"
     java
