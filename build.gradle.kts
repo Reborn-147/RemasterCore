@@ -14,18 +14,13 @@ repositories {
     mavenCentral()
     repositories {
         maven("https://maven.fabricmc.net/")
-        maven("https://repo.legacyfabric.net/") {
-            name = "Legacy Fabric"
-        }
+        maven("https://repo.legacyfabric.net/")
         maven("https://api.modrinth.com/maven") {
-            name = "Modrinth"
             content {
                 includeGroup("maven.modrinth")
             }
         }
-        maven("https://jitpack.io") {
-            name = "jitpack"
-        }
+        maven("https://jitpack.io")
     }
     mavenLocal()
 }
@@ -42,7 +37,6 @@ dependencies {
     modImplementation("net.fabricmc:fabric-loader:${loader_version}")
     modImplementation("net.fabricmc:fabric-language-kotlin:1.11.0+kotlin.2.0.0")
 
-    //Vulnerability
     implementation("org.apache.logging.log4j:log4j-core:2.23.1")
     implementation("com.google.guava:guava:33.2.1-jre")
     implementation("com.google.code.gson:gson:2.10")
