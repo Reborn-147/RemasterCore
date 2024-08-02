@@ -1,5 +1,3 @@
-import net.fabricmc.loom.configuration.ide.RunConfigSettings
-
 plugins {
     id("fabric-loom") version "1.7.4"
     id("legacy-looming")version "1.7-SNAPSHOT" // Version must be the same as fabric-loom's
@@ -15,12 +13,12 @@ repositories {
     repositories {
         maven("https://maven.fabricmc.net/")
         maven("https://repo.legacyfabric.net/")
+        maven("https://jitpack.io")
         maven("https://api.modrinth.com/maven") {
             content {
                 includeGroup("maven.modrinth")
             }
         }
-        maven("https://jitpack.io")
     }
     mavenLocal()
 }
