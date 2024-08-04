@@ -1,8 +1,8 @@
-package com.example.examplemod
+package net.remaster147.remastercore
 
 import net.fabricmc.api.ModInitializer
 
-object ExampleMod : ModInitializer {
+object RemasterCore : ModInitializer {
     override fun onInitialize() {
         println("Hello Fabric world!")
     }

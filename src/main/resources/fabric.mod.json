@@ -1,15 +1,15 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "remaster_core",
   "version": "${version}",
-  "name": "Example Mod",
+  "name": "Remaster Core",
   "description": "This is an example description! Tell everyone what your mod is about!",
   "authors": [
     "Me!"
   ],
   "contact": {
-    "homepage": "https://legacyfabric.net/",
-    "sources": "https://github.com/Legacy-Fabric/fabric-example-mod"
+    "homepage": "https://github.com/Remaster147",
+    "sources": "https://github.com/Remaster147/RemasterCore"
   },
   "license": "CC0-1.0",
   "icon": "assets/modid/icon.png",
@@ -17,14 +17,14 @@
   "entrypoints": {
     "main": [ {
       "adapter": "kotlin",
-      "value": "com.example.examplemod.ExampleMod"
+      "value": "net.remaster147.remastercore.RemasterCore"
     }]
   },
   "depends": {
     "fabricloader": ">=0.14.19",
     "minecraft": "1.4.7"
   },
-  "suggests": {
-    "another-mod": "*"
-  }
+  "mixins": [
+    "remastercore.mixins.json"
+  ]
 }
