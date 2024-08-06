@@ -19,7 +19,13 @@ abstract
 class BlockMixin {
     @Shadow private String translationKey;
 
-    @Shadow @Final public static Block[] BLOCKS;
+    @Shadow @Mutable @Final public static Block[] BLOCKS = new Block[Integer.MAX_VALUE];
+    @Shadow @Mutable @Final public static final boolean[] field_493 = new boolean[Integer.MAX_VALUE];
+    @Shadow @Mutable @Final public static final int[] field_494 = new int[Integer.MAX_VALUE];
+    @Shadow @Mutable @Final public static final boolean[] field_495 = new boolean[Integer.MAX_VALUE];
+    @Shadow @Mutable @Final public static final int[] field_496 = new int[Integer.MAX_VALUE];
+    @Shadow @Mutable @Final public static final boolean[] field_497 = new boolean[Integer.MAX_VALUE];
+    @Shadow @Mutable @Final public static boolean[] field_498 = new boolean[Integer.MAX_VALUE];
 
     @Mutable
     @Shadow @Final public Material material;
@@ -34,13 +40,6 @@ class BlockMixin {
     @Unique
     public Map<Identifier, Block> getVanillaBlocks() {
         return BlockRegistry.INSTANCE.getBlocksByNamespace("minecraft");
-    }
-
-    @Inject(method = "<init>(ILnet/minecraft/block/material/Material;)V", at = @At(value = "FIELD", shift = At.Shift.BEFORE, ordinal = 0, target = "Lnet/minecraft/block/Block;BLOCKS:[Lnet/minecraft/block/Block;"))
-    protected void fillBlockIds(int i, Material material, CallbackInfo ci) {
-        for (int j = 0; j < 4096; j++) {
-            BLOCKS[j] = Block.PLANKS;
-        }
     }
 
     @Inject(method = "<init>(ILnet/minecraft/block/material/Material;)V", at = @At(value = "FIELD", shift = At.Shift.BEFORE, ordinal = 1, target = "Lnet/minecraft/block/Block;BLOCKS:[Lnet/minecraft/block/Block;"), cancellable = true)
