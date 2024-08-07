@@ -33,7 +33,6 @@ dependencies {
     minecraft("com.mojang:minecraft:${minecraft_version}")
     mappings("net.legacyfabric:yarn:${yarn_mappings}")
     modImplementation("net.fabricmc:fabric-loader:${loader_version}")
-    modImplementation("net.fabricmc:fabric-language-kotlin:1.11.0+kotlin.2.0.0")
 
     implementation("org.apache.logging.log4j:log4j-core:2.23.1")
     implementation("com.google.guava:guava:33.2.1-jre")
@@ -48,13 +47,7 @@ java {
 }
 
 
-tasks.withType<JavaCompile> {
-    options.encoding = "UTF-8"
 
-    if (JavaVersion.current().isJava9Compatible) {
-        options.release = 8
-    }
-}
 
 kotlin {
     jvmToolchain(8)

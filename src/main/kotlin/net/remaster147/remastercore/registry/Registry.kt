@@ -1,8 +1,8 @@
 package net.remaster147.remastercore.registry
 
-import kotlinx.atomicfu.locks.withLock
 import net.minecraft.utils.Identifier
 import java.util.concurrent.locks.ReentrantLock
+import kotlin.concurrent.withLock
 
 abstract class Registry<T> {
     protected val registry = mutableMapOf<Identifier, T>()

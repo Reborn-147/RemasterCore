@@ -12,11 +12,15 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.io.Serializable;
+
 @Mixin(ChunkSection.class)
-public class ChunkSectionMixin {
+public abstract class ChunkSectionMixin {
     @Shadow @Mutable private ChunkNibbleArray skyLight;
 
     @Shadow private ChunkNibbleArray field_4748;
+
+    @Shadow public abstract int getYOffset();
 
     @Unique
     private BlockState[] blockStates;
@@ -33,10 +37,13 @@ public class ChunkSectionMixin {
     }
 
     @Unique
-    public BlockState getBlock(int x, int y, int z) {
+   /* public Serializable getBlock(int x, int y, int z,Identifier identifier1) {
         BlockState blockState = blockStates[y << 8 | z << 4 | x];
-
-        return field_4748 != null ? field_4748.get()
-        return this.field_4748 != null ? this.field_4748.get(x, y, z) << 8 | var4 : var4;
+        return field_4748 != null ? field_4748.get(x, y, z): identifier1.toString() ;
+*/
+    public int getBlock(int x, int y, int z,Identifier identifier1) {
+        BlockState blockState = blockStates[y << 8 | z << 4 | x];
+        return field_4748 != null ? field_4748.get(x, y, z): blockStates.length ;
+       // return this.field_4748 != null ? this.field_4748.get(x, y, z) << 8 | var4 : var4;
     }
 }
