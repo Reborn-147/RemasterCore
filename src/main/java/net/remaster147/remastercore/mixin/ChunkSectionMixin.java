@@ -4,6 +4,7 @@ import net.minecraft.utils.Identifier;
 import net.minecraft.world.chunk.ChunkNibbleArray;
 import net.minecraft.world.chunk.ChunkSection;
 import net.remaster147.remastercore.block.BlockState;
+import net.remaster147.remastercore.registry.BlockRegistry;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
@@ -22,6 +23,7 @@ public abstract class ChunkSectionMixin {
 
     @Shadow public abstract int getYOffset();
 
+    @Shadow private byte[] blocks;
     @Unique
     private BlockState[] blockStates;
 
@@ -37,13 +39,9 @@ public abstract class ChunkSectionMixin {
     }
 
     @Unique
-   /* public Serializable getBlock(int x, int y, int z,Identifier identifier1) {
+    public BlockState getBlock(int x, int y, int z) {
         BlockState blockState = blockStates[y << 8 | z << 4 | x];
-        return field_4748 != null ? field_4748.get(x, y, z): identifier1.toString() ;
-*/
-    public int getBlock(int x, int y, int z,Identifier identifier1) {
-        BlockState blockState = blockStates[y << 8 | z << 4 | x];
-        return field_4748 != null ? field_4748.get(x, y, z): blockStates.length ;
-       // return this.field_4748 != null ? this.field_4748.get(x, y, z) << 8 | var4 : var4;
+        return this.field_4748 != null ? new BlockState(
+                BlockRegistry.INSTANCE.get(this.field_4748.get(x, y, z) << 8 | this.blocks[y << 8 | z << 4 | x] & 255 )) : blockState;
     }
 }
