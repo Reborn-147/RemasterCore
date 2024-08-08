@@ -1,11 +1,10 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "net.remaster147.remastercore.mixin",
+  "package": "net.remaster147.remastercore.mixin.impl",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "BlockMixin",
-    "ChunkMixin",
     "ChunkSectionMixin",
     "ThreadedAnvilChunkStorageMixin",
     "WorldMixin"
