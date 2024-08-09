@@ -18,16 +18,12 @@ abstract
 class BlockMixin {
     @Shadow private String translationKey;
 
-    @Shadow @Mutable @Final public static Block[] BLOCKS = new Block[Short.MAX_VALUE];
     @Shadow @Mutable @Final public static final boolean[] field_493 = new boolean[Short.MAX_VALUE];
     @Shadow @Mutable @Final public static final int[] field_494 = new int[Short.MAX_VALUE];
     @Shadow @Mutable @Final public static final boolean[] field_495 = new boolean[Short.MAX_VALUE];
     @Shadow @Mutable @Final public static final int[] field_496 = new int[Short.MAX_VALUE];
     @Shadow @Mutable @Final public static final boolean[] field_497 = new boolean[Short.MAX_VALUE];
     @Shadow @Mutable @Final public static boolean[] field_498 = new boolean[Short.MAX_VALUE];
-
-    @Mutable
-    @Shadow @Final public Material material;
 
     @Shadow protected abstract void setBoundingBox(float minX, float minY, float minZ, float maxX, float maxY, float maxZ);
 
@@ -41,13 +37,13 @@ class BlockMixin {
         return BlockRegistry.INSTANCE.getBlocksByNamespace("minecraft");
     }
 
-    @Inject(method = "<init>(ILnet/minecraft/block/material/Material;)V", at = @At(value = "FIELD", shift = At.Shift.BEFORE, ordinal = 1, target = "Lnet/minecraft/block/Block;BLOCKS:[Lnet/minecraft/block/Block;"))
+    /*@Inject(method = "<init>(ILnet/minecraft/block/material/Material;)V", at = @At(value = "FIELD", shift = At.Shift.BEFORE, ordinal = 1, target = "Lnet/minecraft/block/Block;BLOCKS:[Lnet/minecraft/block/Block;"))
     protected void moveBlockRegistry(int i, Material material, CallbackInfo ci) {
 
-    }
+    }*/
 
-    @Inject(method = "isSolid", at = @At("HEAD"))
+    /*@Inject(method = "isSolid", at = @At("HEAD"))
     private static void isSolid(int id, CallbackInfoReturnable<Boolean> cir) {
 
-    }
+    }*/
 }
