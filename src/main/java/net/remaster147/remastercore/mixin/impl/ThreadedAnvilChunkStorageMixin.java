@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(ThreadedAnvilChunkStorage.class)
 public class ThreadedAnvilChunkStorageMixin {
     @Redirect(method = "putChunk", at = @At(value = "INVOKE", target = "Lnet/minecraft/nbt/NbtCompound;putByteArray(Ljava/lang/String;[B)V", ordinal = 0))
-    private void putChunk(NbtCompound instance, String value, byte[] bytes, @Local(name = "var10") ChunkSection section) {
+    private void putChunk(NbtCompound instance, String value, byte[] bytes, @Local ChunkSection section) {
         IChunkSection injectSection = (IChunkSection) section;
 
         if(!section.isEmpty()) {
@@ -30,7 +30,7 @@ public class ThreadedAnvilChunkStorageMixin {
     }
 
     @Redirect(method = "getChunk", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/chunk/ChunkSection;setBlocks([B)V"))
-    private void getChunk(ChunkSection instance, byte[] bytes, @Local(name = "var11") NbtCompound var11) {
+    private void getChunk(ChunkSection instance, byte[] bytes, @Local(argsOnly = true) NbtCompound var11) {
         IChunkSection injectSection = (IChunkSection) instance;
 
         if(var11.getType() == 7) {

@@ -37,11 +37,6 @@ class BlockMixin {
         return BlockRegistry.INSTANCE.getBlocksByNamespace("minecraft");
     }
 
-    /*@Inject(method = "<init>(ILnet/minecraft/block/material/Material;)V", at = @At(value = "FIELD", shift = At.Shift.BEFORE, ordinal = 1, target = "Lnet/minecraft/block/Block;BLOCKS:[Lnet/minecraft/block/Block;"))
-    protected void moveBlockRegistry(int i, Material material, CallbackInfo ci) {
-
-    }*/
-
     /*@Inject(method = "isSolid", at = @At("HEAD"))
     private static void isSolid(int id, CallbackInfoReturnable<Boolean> cir) {
 
