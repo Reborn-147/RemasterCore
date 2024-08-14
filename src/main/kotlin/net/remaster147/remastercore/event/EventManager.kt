@@ -2,13 +2,16 @@ package net.remaster147.remastercore.event
 
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.reflect.KClass
+import kotlin.reflect.full.safeCast
 
 object EventManager {
     private val listeners = ConcurrentHashMap<KClass<out Event>, Pair<EventListener<Any>, EventPriority>>()
 
     fun <T : Event> call(event: T) {
         listeners.entries.sortedBy { it.value.second.value }.forEach {
-            it.value.first.listener(event)
+            if (it.key.isInstance(event)) {
+                it.value.first.listener(event)
+            }
         }
     }
 

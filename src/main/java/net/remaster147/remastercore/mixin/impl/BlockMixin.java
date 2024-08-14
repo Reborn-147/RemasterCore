@@ -31,7 +31,7 @@ abstract class BlockMixin implements IBlock {
     @Shadow protected abstract void setBoundingBox(float minX, float minY, float minZ, float maxX, float maxY, float maxZ);
 
 
-    @Inject(method = "<init>(ILnet/minecraft/block/material/Material;)V", at = @At(value = "FIELD", target = "Lnet/minecraft/block/Block;material:Lnet/minecraft/block/material/Material;", shift = At.Shift.BEFORE))
+    /*@Inject(method = "<init>(ILnet/minecraft/block/material/Material;)V", at = @At(value = "FIELD", target = "Lnet/minecraft/block/Block;material:Lnet/minecraft/block/material/Material;", shift = At.Shift.BEFORE))
     protected void initBlock(int i, Material material, CallbackInfo ci) {
         this.material = material;
 
@@ -43,7 +43,7 @@ abstract class BlockMixin implements IBlock {
                 BlockRegistry.INSTANCE.register(new Identifier("minecraft", "portal"), (Block) (Object) this);
             }
         }
-    }
+    }*/
 
     /*@Inject(method = "isSolid", at = @At("HEAD"))
     private static void isSolid(int id, CallbackInfoReturnable<Boolean> cir) {
