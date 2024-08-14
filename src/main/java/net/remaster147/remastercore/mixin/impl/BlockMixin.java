@@ -2,6 +2,7 @@ package net.remaster147.remastercore.mixin.impl;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.remaster147.core.IBlock;
 import net.remaster147.remastercore.registry.BlockRegistry;
 import net.minecraft.utils.Identifier;
 import org.spongepowered.asm.mixin.*;
@@ -14,8 +15,7 @@ import java.util.Map;
 
 
 @Mixin(Block.class)
-abstract
-class BlockMixin {
+abstract class BlockMixin implements IBlock {
     @Shadow private String translationKey;
 
     @Shadow @Mutable @Final public static final boolean[] field_493 = new boolean[Short.MAX_VALUE];
@@ -27,14 +27,30 @@ class BlockMixin {
 
     @Shadow protected abstract void setBoundingBox(float minX, float minY, float minZ, float maxX, float maxY, float maxZ);
 
+    @Shadow public abstract String getTranslationKey();
+
+    @Shadow @Final public Material material;
+
     @Unique
-    public Map<Identifier, Block> getBlocks() {
+    public Map<Identifier, IBlock> getBlocks() {
         return BlockRegistry.INSTANCE.getAll();
     }
 
     @Unique
-    public Map<Identifier, Block> getVanillaBlocks() {
+    public Map<Identifier, IBlock> getVanillaBlocks() {
         return BlockRegistry.INSTANCE.getBlocksByNamespace("minecraft");
+    }
+
+    @Inject(method = "<init>(ILnet/minecraft/block/material/Material;)V", at = @At("TAIL"))
+    private void init(CallbackInfo ci) {
+        if (getTranslationKey() != null) {
+            if(material == Material.PORTAL) {
+                BlockRegistry.INSTANCE.register(new Identifier("minecraft", "portal"), this);
+
+                return;
+            }
+            BlockRegistry.INSTANCE.register(new Identifier("minecraft", getTranslationKey()), this);
+        }
     }
 
     /*@Inject(method = "isSolid", at = @At("HEAD"))
