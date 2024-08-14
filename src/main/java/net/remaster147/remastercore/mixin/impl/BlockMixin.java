@@ -2,16 +2,13 @@ package net.remaster147.remastercore.mixin.impl;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.remaster147.core.IBlock;
-import net.remaster147.remastercore.registry.BlockRegistry;
 import net.minecraft.utils.Identifier;
+import net.remaster147.remastercore.mixin.IBlock;
+import net.remaster147.remastercore.registry.BlockRegistry;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import java.util.Map;
 
 
 @Mixin(Block.class)
@@ -25,31 +22,26 @@ abstract class BlockMixin implements IBlock {
     @Shadow @Mutable @Final public static final boolean[] field_497 = new boolean[Short.MAX_VALUE];
     @Shadow @Mutable @Final public static boolean[] field_498 = new boolean[Short.MAX_VALUE];
 
-    @Shadow protected abstract void setBoundingBox(float minX, float minY, float minZ, float maxX, float maxY, float maxZ);
-
     @Shadow public abstract String getTranslationKey();
 
-    @Shadow @Final public Material material;
+    @Shadow @Mutable @Final public Material material;
 
-    @Unique
-    public Map<Identifier, IBlock> getBlocks() {
-        return BlockRegistry.INSTANCE.getAll();
-    }
+    @Shadow @Mutable @Final public int id;
 
-    @Unique
-    public Map<Identifier, IBlock> getVanillaBlocks() {
-        return BlockRegistry.INSTANCE.getBlocksByNamespace("minecraft");
-    }
+    @Shadow protected abstract void setBoundingBox(float minX, float minY, float minZ, float maxX, float maxY, float maxZ);
 
-    @Inject(method = "<init>(ILnet/minecraft/block/material/Material;)V", at = @At("TAIL"))
-    private void init(CallbackInfo ci) {
+
+    @Inject(method = "<init>(ILnet/minecraft/block/material/Material;)V", at = @At(value = "FIELD", target = "Lnet/minecraft/block/Block;material:Lnet/minecraft/block/material/Material;", shift = At.Shift.BEFORE))
+    protected void initBlock(int i, Material material, CallbackInfo ci) {
+        this.material = material;
+
         if (getTranslationKey() != null) {
+            BlockRegistry.INSTANCE.register(new Identifier("minecraft", getTranslationKey()), (Block) (Object) this);
+        }
+        else {
             if(material == Material.PORTAL) {
-                BlockRegistry.INSTANCE.register(new Identifier("minecraft", "portal"), this);
-
-                return;
+                BlockRegistry.INSTANCE.register(new Identifier("minecraft", "portal"), (Block) (Object) this);
             }
-            BlockRegistry.INSTANCE.register(new Identifier("minecraft", getTranslationKey()), this);
         }
     }
 
