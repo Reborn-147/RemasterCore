@@ -4,6 +4,7 @@
   "package": "net.remaster147.remastercore.mixin.impl",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "BlockItemMixin",
     "BlockMixin",
     "WorldMixin"
   ],

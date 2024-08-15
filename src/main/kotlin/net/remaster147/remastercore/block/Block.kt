@@ -11,7 +11,6 @@ abstract class Block(val settings: BlockSettingsBuilder) {
         var hardness: Float = 0.0f
         var resistance: Float = 0.0f
         var blockLight: Int = 0
-        var itemGroup: ItemGroup = ItemGroup.BUILDING_BLOCKS
 
         fun setMaterial(material: Material): BlockSettingsBuilder {
             this.material = material
@@ -25,11 +24,6 @@ abstract class Block(val settings: BlockSettingsBuilder) {
 
         fun setResistance(resistance: Float): BlockSettingsBuilder {
             this.resistance = resistance
-            return this
-        }
-
-        fun setItemGroup(itemGroup: ItemGroup): BlockSettingsBuilder {
-            this.itemGroup = itemGroup
             return this
         }
 

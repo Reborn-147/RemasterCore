@@ -17,32 +17,29 @@ object BlockRegistry : Registry<Block>() {
     }
 
     fun registerAll() {
-        EventManager.addListener(MinecraftPreEvent::class, EventListener {
+        EventManager.addListener(MinecraftPostEvent::class, EventListener {
             var index = net.minecraft.block.Block.BLOCKS.indexOfLast { it != null } + 1
-            var itemIndex = net.minecraft.item.Item.ITEMS.indexOfLast { it != null } + 1
 
             //Modded Blocks
-            registry.entries.sortedBy { it.key.namespace }.forEach {
-                val settings = it.value.settings
+            val modBlocks = registry.entries.map { it.key to it.value }
+
+            modBlocks.sortedBy { it.first.id }.forEach {
+                val settings = it.second.settings
 
                 net.minecraft.block.Block.BLOCKS[index] = object : net.minecraft.block.Block(index, settings.material) {
                     init {
                         blastResistance = settings.resistance * 3F
                         hardness = settings.hardness
-                        translationKey = it.key.id
+                        translationKey = it.first.id
                         field_439 = settings.blockLight
-                        itemGroup = settings.itemGroup
                     }
                 }
 
-                net.minecraft.item.Item.ITEMS[itemIndex] = net.minecraft.item.BlockItem(index - 256)
+                blocks[it.second] = index
 
-                println("fuck off")
-
-                blocks[it.value] = index
+                println("timing 1")
 
                 index++
-                itemIndex++
             }
 
         }, EventPriority.HIGH)

@@ -11,7 +11,7 @@
     "homepage": "https://github.com/Remaster147",
     "sources": "https://github.com/Remaster147/RemasterCore"
   },
-  "license": "CC0-1.0",
+  "license": "MIT",
   "icon": "assets/modid/icon.png",
   "environment": "*",
   "entrypoints": {
