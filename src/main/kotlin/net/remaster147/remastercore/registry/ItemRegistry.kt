@@ -1,6 +1,7 @@
 package net.remaster147.remastercore.registry
 
-import net.remaster147.remastercore.block.Block
+import net.minecraft.item.ItemStack
+import net.minecraft.item.itemgroup.ItemGroup
 import net.remaster147.remastercore.event.EventListener
 import net.remaster147.remastercore.event.EventManager
 import net.remaster147.remastercore.event.EventPriority
@@ -22,23 +23,28 @@ object ItemRegistry : Registry<Item>() {
                 val settings = it.second.settings
 
                 if(it.second is BlockItem) {
-                    println("timing 2")
                     val block = it.second as BlockItem
                     val blockId = BlockRegistry.blocks[block.block] ?: throw IllegalArgumentException("Block not found in registry")
 
-                    object : net.minecraft.item.BlockItem(blockId) {
+                    object : net.minecraft.item.BlockItem(blockId - 256) {
                         init {
                             maxCount = settings.maxCount
                             maxDamage = settings.maxDamage
-                            itemGroup = settings.itemGroup
-                            setName(it.first.id)
+                        }
+
+                        override fun getItemGroup(): ItemGroup {
+                            return settings.itemGroup
+                        }
+
+                        override fun getDisplayName(stack: ItemStack): String {
+                            return it.first.id
                         }
                     }
 
-                    items[it.second] = index + 256
+                    items[it.second] = index
                 }
                 else {
-                    net.minecraft.item.Item.ITEMS[index] = object : net.minecraft.item.Item(index) {
+                    object : net.minecraft.item.Item(index) {
                         init {
                             maxCount = settings.maxCount
                             maxDamage = settings.maxDamage

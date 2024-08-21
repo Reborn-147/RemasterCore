@@ -1,12 +1,10 @@
 package net.remaster147.remastercore.registry
 
-import net.minecraft.entity.Entity
 import net.minecraft.utils.Identifier
 import net.remaster147.remastercore.block.Block
 import net.remaster147.remastercore.event.EventListener
 import net.remaster147.remastercore.event.EventManager
 import net.remaster147.remastercore.event.EventPriority
-import net.remaster147.remastercore.event.core.MinecraftPostEvent
 import net.remaster147.remastercore.event.core.MinecraftPreEvent
 
 object BlockRegistry : Registry<Block>() {
@@ -17,7 +15,7 @@ object BlockRegistry : Registry<Block>() {
     }
 
     fun registerAll() {
-        EventManager.addListener(MinecraftPostEvent::class, EventListener {
+        EventManager.addListener(MinecraftPreEvent::class, EventListener {
             var index = net.minecraft.block.Block.BLOCKS.indexOfLast { it != null } + 1
 
             //Modded Blocks
@@ -26,7 +24,7 @@ object BlockRegistry : Registry<Block>() {
             modBlocks.sortedBy { it.first.id }.forEach {
                 val settings = it.second.settings
 
-                net.minecraft.block.Block.BLOCKS[index] = object : net.minecraft.block.Block(index, settings.material) {
+                object : net.minecraft.block.Block(index, settings.material) {
                     init {
                         blastResistance = settings.resistance * 3F
                         hardness = settings.hardness

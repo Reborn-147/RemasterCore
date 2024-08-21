@@ -6,9 +6,6 @@
   "mixins": [
     "BlockItemMixin",
     "BlockMixin",
-    "WorldMixin"
-  ],
-  "client": [
     "MinecraftMixin"
   ]
 }
